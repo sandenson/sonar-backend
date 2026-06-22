@@ -5,7 +5,7 @@ services:
     container_name: sonar-database
     environment:
       POSTGRES_DB: ${PG_DB_NAME}
-      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_PASSWORD: ${PG_PASS}
       POSTGRES_USER: ${PG_USER}
     volumes:
       - ./data:/var/lib/postgresql/data
