@@ -13,20 +13,18 @@ export class FindUserByUsernameOrEmailService {
   async execute(usernameEmail: string): Promise<User> {
     const value = usernameEmail.toLowerCase();
 
-    const user = await this.usersRepo.findOne({
-      where: [
-        {
-          username: Raw((alias) => `LOWER(${alias}) = :value`, {
-            value,
-          }),
-        },
-        {
-          email: Raw((alias) => `LOWER(${alias}) = :value`, {
-            value,
-          }),
-        },
-      ],
-    });
+    const user = await this.usersRepo.findOneBy([
+      {
+        username: Raw((alias) => `LOWER(${alias}) = :value`, {
+          value,
+        }),
+      },
+      {
+        email: Raw((alias) => `LOWER(${alias}) = :value`, {
+          value,
+        }),
+      },
+    ]);
 
     if (!user) {
       throw new NotFoundException('Usuário não encontrado');
