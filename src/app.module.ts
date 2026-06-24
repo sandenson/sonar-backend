@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from 'db/datasource';
 import * as Joi from 'joi';
+import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -17,9 +18,11 @@ import { UsersModule } from './users/users.module';
         PG_USER: Joi.string().required(),
         PG_PORT: Joi.number().port().default(5432),
         PG_HOST: Joi.string().default('localhost'),
+        JWT_SECRET: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({ ...dataSourceOptions, autoLoadEntities: true }),
+    AuthModule,
   ],
   controllers: [],
   providers: [],

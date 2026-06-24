@@ -20,5 +20,6 @@ import { UpdateUserService } from './services/update-user/update-user.service';
     FindUserByUsernameOrEmailController,
     UpdateUserController,
   ],
+  exports: [FindUserByUsernameOrEmailService],
 })
 export class UsersModule {}

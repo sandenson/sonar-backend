@@ -10,10 +10,13 @@ export class FindUserByUsernameOrEmailService {
     private usersRepo: Repository<User>,
   ) {}
 
-  async execute(usernameEmail: string): Promise<User> {
+  async execute(
+    usernameEmail: string,
+    selectPassword: boolean = false,
+  ): Promise<User> {
     const value = usernameEmail.toLowerCase();
 
-    const user = await this.usersRepo.findOneBy([
+    const query = this.usersRepo.createQueryBuilder('u').where([
       {
         username: Raw((alias) => `LOWER(${alias}) = :value`, {
           value,
@@ -25,6 +28,12 @@ export class FindUserByUsernameOrEmailService {
         }),
       },
     ]);
+
+    if (selectPassword) {
+      query.addSelect('u.password');
+    }
+
+    const user = await query.getOne();
 
     if (!user) {
       throw new NotFoundException('Usuário não encontrado');
