@@ -35,7 +35,7 @@ export class CreateUserController {
         value: {
           message: [
             'username must be shorter than or equal to 50 characters',
-            'username should not contain a \\s string',
+            'Nome de usuário não pode conter espaços em branco',
             'username should not be empty',
             'username must be a string',
             'email must be shorter than or equal to 200 characters',
