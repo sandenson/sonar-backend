@@ -3,8 +3,8 @@ import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity';
 import { FindUserByUsernameOrEmailService } from 'src/users/services/find-user-by-username-or-email/find-user-by-username-or-email.service';
 
-@Controller('find-user-by-username-or-email')
-@ApiTags('users', 'find', 'find-by')
+@Controller('user')
+@ApiTags('users', 'find-by')
 export class FindUserByUsernameOrEmailController {
   constructor(
     private readonly findUserByUsernameOrEmailService: FindUserByUsernameOrEmailService,

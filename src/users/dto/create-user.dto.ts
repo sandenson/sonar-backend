@@ -32,7 +32,18 @@ export class CreateUserDto {
   })
   email!: string;
 
-  @IsStrongPassword()
-  @ApiProperty({ description: 'Senha criptografada', example: 'Strong12!@' })
+  @Transform(({ value }) => (value as string).trim())
+  @IsStrongPassword(
+    {},
+    {
+      message:
+        'A senha deve conter pelo menos 8 caracteres, 1 caractere especial, 1 algarismo, 1 letra maiúscula e 1 minúscula',
+    },
+  )
+  @ApiProperty({
+    description:
+      'Senha contendo pelo menos 8 caracteres, 1 caractere especial, 1 algarismo, 1 letra maiúscula e 1 minúscula',
+    example: 'Strong12!@',
+  })
   password!: string;
 }
