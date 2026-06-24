@@ -1,20 +1,25 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
   IsString,
   IsStrongPassword,
+  Matches,
   MaxLength,
-  NotContains,
 } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
+  @Transform(({ value }) => (value as string).trim())
   @IsNotEmpty()
-  @NotContains('\\s')
+  @Matches(/^\S+$/, {
+    message: 'Nome de usuário não pode conter espaços em branco',
+  })
   @MaxLength(50)
   @ApiProperty({
-    description: 'Nome de usuário não pode ter mais de 50 caracteres',
+    description:
+      'Nome de usuário não pode ter espaços em branco nem mais de 50 caracteres',
     example: 'sigma67',
   })
   username!: string;
