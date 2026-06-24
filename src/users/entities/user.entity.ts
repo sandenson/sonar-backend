@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { hash } from 'bcrypt';
+import { genSalt, hash } from 'bcrypt';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -57,7 +57,8 @@ export class User {
   @BeforeUpdate()
   async hashPassword() {
     if (this.password && !this.password.startsWith('$2b$')) {
-      this.password = await hash(this.password, 10);
+      const salt = await genSalt(10);
+      this.password = await hash(this.password, salt);
     }
   }
 }
