@@ -11,16 +11,18 @@ export class FindUserByUsernameOrEmailService {
   ) {}
 
   async execute(usernameEmail: string): Promise<User> {
+    const value = usernameEmail.toLowerCase();
+
     const user = await this.usersRepo.findOne({
       where: [
         {
-          username: Raw((alias) => `LOWER(${alias}) = LOWER(:usernameEmail)`, {
-            usernameEmail,
+          username: Raw((alias) => `LOWER(${alias}) = :value`, {
+            value,
           }),
         },
         {
-          email: Raw((alias) => `LOWER(${alias}) = LOWER(:usernameEmail)`, {
-            usernameEmail,
+          email: Raw((alias) => `LOWER(${alias}) = :value`, {
+            value,
           }),
         },
       ],
