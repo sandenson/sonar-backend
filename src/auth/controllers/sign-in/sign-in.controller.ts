@@ -9,9 +9,9 @@ import {
   ApiUnauthorizedResponse,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { AccessTokenDto } from '../dto/access-token.dto';
-import { SignInDto } from '../dto/sign-in.dto';
-import { SignInService } from '../services/sign-in/sign-in.service';
+import { AccessTokenDto } from '../../dto/access-token.dto';
+import { SignInDto } from '../../dto/sign-in.dto';
+import { SignInService } from '../../services/sign-in/sign-in.service';
 
 @Controller('auth')
 @ApiTags('auth')
