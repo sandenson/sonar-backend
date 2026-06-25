@@ -9,6 +9,7 @@ import {
   ApiUnauthorizedResponse,
   getSchemaPath,
 } from '@nestjs/swagger';
+import { SkipAuth } from 'src/auth/decorators/skip-auth/skip-auth.decorator';
 import { AccessTokenDto } from '../../dto/access-token.dto';
 import { SignInDto } from '../../dto/sign-in.dto';
 import { SignInService } from '../../services/sign-in/sign-in.service';
@@ -16,6 +17,7 @@ import { SignInService } from '../../services/sign-in/sign-in.service';
 @Controller('auth')
 @ApiTags('auth')
 @ApiExtraModels(SignInDto)
+@SkipAuth()
 export class SignInController {
   constructor(private readonly signInService: SignInService) {}
 
