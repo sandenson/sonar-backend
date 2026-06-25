@@ -3,6 +3,7 @@ import { Transform } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsStrongPassword,
   Matches,
@@ -10,9 +11,9 @@ import {
 } from 'class-validator';
 
 export class CreateUserDto {
+  @IsOptional()
   @IsString()
   @Transform(({ value }) => (value as string).trim())
-  @IsNotEmpty()
   @Matches(/^\S+$/, {
     message: 'Nome de usuário não pode conter espaços em branco',
   })
@@ -21,8 +22,21 @@ export class CreateUserDto {
     description:
       'Nome de usuário não pode ter espaços em branco nem mais de 50 caracteres',
     example: 'sigma67',
+    required: false,
   })
-  username!: string;
+  username?: string;
+
+  @IsOptional()
+  @IsString()
+  @Transform(({ value }) => (value as string).trim())
+  @IsNotEmpty()
+  @MaxLength(50)
+  @ApiProperty({
+    description: 'Nome exibido para o usuário',
+    example: 'Alice',
+    required: false,
+  })
+  name?: string;
 
   @IsEmail()
   @MaxLength(200)
