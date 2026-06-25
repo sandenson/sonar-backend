@@ -23,10 +23,7 @@ const initDbConnectionData = () => {
         database,
       }
     : {
-        url: `postgresql://${username}:${password}@${host}:${port}/${database}?sslmode=require`,
-        ssl: {
-          rejectUnauthorized: false,
-        },
+        url: `postgresql://${username}:${password}@${host}:${port}/${database}`,
       };
 };
 
@@ -47,6 +44,7 @@ export const dataSourceOptions: DataSourceOptions = {
     max: 1,
     connectionTimeoutMillis: 5000,
     idleTimeoutMillis: 1000,
+    ssl: process.env.ENV === 'dev' ? false : { rejectUnauthorized: false },
   },
 };
 
