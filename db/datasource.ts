@@ -1,4 +1,3 @@
-import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
 import path from 'node:path';
 import { DataSource, type DataSourceOptions } from 'typeorm';
@@ -8,15 +7,13 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 config();
 
-const configService = new ConfigService();
-
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  host: configService.get<string>('PG_HOST'),
-  port: configService.get<number>('PG_PORT'),
-  username: configService.get<string>('PG_USER'),
-  password: configService.get<string>('PG_PASS'),
-  database: configService.get<string>('PG_DB_NAME'),
+  host: process.env.PG_HOST,
+  port: process.env.PG_PORT ? Number(process.env.PG_PORT) : 5432,
+  username: process.env.PG_USER,
+  password: process.env.PG_PASS,
+  database: process.env.PG_DB_NAME,
   entities: [
     path.resolve(__dirname, '../src/**/*.entity.ts'),
     'dist/**/*.entity.js',
