@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { AccessTokenPayloadDto } from 'src/auth/dto/access-token-payload.dto';
+import { AccessTokenPayloadDto } from '../../auth/dto/access-token-payload.dto';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

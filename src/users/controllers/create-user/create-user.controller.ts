@@ -4,9 +4,9 @@ import {
   ApiCreatedResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { User } from 'src/users/entities/user.entity';
-import { CreateUserService } from 'src/users/services/create-user/create-user.service';
+import { CreateUserDto } from '../../../users/dto/create-user.dto';
+import { User } from '../../../users/entities/user.entity';
+import { CreateUserService } from '../../../users/services/create-user/create-user.service';
 
 @Controller('user')
 @ApiTags('users', 'create')

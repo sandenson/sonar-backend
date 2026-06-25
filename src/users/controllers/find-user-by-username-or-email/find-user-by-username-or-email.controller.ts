@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { User } from 'src/users/entities/user.entity';
-import { FindUserByUsernameOrEmailService } from 'src/users/services/find-user-by-username-or-email/find-user-by-username-or-email.service';
+import { User } from '../../../users/entities/user.entity';
+import { FindUserByUsernameOrEmailService } from '../../../users/services/find-user-by-username-or-email/find-user-by-username-or-email.service';
 
 @Controller('user')
 @ApiTags('users', 'find-by')

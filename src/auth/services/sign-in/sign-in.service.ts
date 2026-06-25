@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
-import { AccessTokenDto } from 'src/auth/dto/access-token.dto';
-import { SignInDto } from 'src/auth/dto/sign-in.dto';
-import { FindUserByUsernameOrEmailService } from 'src/users/services/find-user-by-username-or-email/find-user-by-username-or-email.service';
+import { AccessTokenDto } from '../../../auth/dto/access-token.dto';
+import { SignInDto } from '../../../auth/dto/sign-in.dto';
+import { FindUserByUsernameOrEmailService } from '../../../users/services/find-user-by-username-or-email/find-user-by-username-or-email.service';
 
 @Injectable()
 export class SignInService {

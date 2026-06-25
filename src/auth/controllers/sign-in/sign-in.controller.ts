@@ -9,7 +9,7 @@ import {
   ApiUnauthorizedResponse,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { SkipAuth } from 'src/auth/decorators/skip-auth/skip-auth.decorator';
+import { SkipAuth } from '../../../auth/decorators/skip-auth/skip-auth.decorator';
 import { AccessTokenDto } from '../../dto/access-token.dto';
 import { SignInDto } from '../../dto/sign-in.dto';
 import { SignInService } from '../../services/sign-in/sign-in.service';

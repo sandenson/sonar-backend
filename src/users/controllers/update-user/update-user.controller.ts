@@ -1,13 +1,13 @@
 import { Body, Controller, Param, Patch } from '@nestjs/common';
 import {
-    ApiBadRequestResponse,
-    ApiNotFoundResponse,
-    ApiOkResponse,
-    ApiTags,
+  ApiBadRequestResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
 } from '@nestjs/swagger';
-import { UpdateUserDto } from 'src/users/dto/update-user.dto';
-import { User } from 'src/users/entities/user.entity';
-import { UpdateUserService } from 'src/users/services/update-user/update-user.service';
+import { UpdateUserDto } from '../../../users/dto/update-user.dto';
+import { User } from '../../../users/entities/user.entity';
+import { UpdateUserService } from '../../../users/services/update-user/update-user.service';
 
 @Controller('user')
 @ApiTags('users', 'update')
