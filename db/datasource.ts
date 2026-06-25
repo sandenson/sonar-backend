@@ -24,6 +24,13 @@ export const dataSourceOptions: DataSourceOptions = {
     path.resolve(__dirname, './migrations/*{.ts,.js}'),
     'dist/db/migrations/*.js',
   ],
+  ssl: {
+    rejectUnauthorized: false,
+  },
+  extra: {
+    max: 1,
+    connectionTimeoutMillis: 5000,
+  },
 };
 
 export const dataSource = new DataSource(dataSourceOptions);
