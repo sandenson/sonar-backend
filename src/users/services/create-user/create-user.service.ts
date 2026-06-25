@@ -13,12 +13,7 @@ export class CreateUserService {
 
   async execute(data: CreateUserDto): Promise<User> {
     try {
-      const username = data.username ?? data.name ?? data.email.split('@')[0];
-      const user = this.usersRepo.create({
-        username,
-        email: data.email,
-        password: data.password,
-      });
+      const user = this.usersRepo.create(data);
       return await this.usersRepo.save(user);
     } catch (error) {
       if (
