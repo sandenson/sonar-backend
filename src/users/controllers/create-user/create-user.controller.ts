@@ -30,8 +30,8 @@ export class CreateUserController {
           statusCode: 400,
         },
       },
-      fieldMissing: {
-        summary: 'Bad Request: [campo] deve respeitar [restrição de esquema]',
+      validationFailed: {
+        summary: 'Bad Request: Validação de esquema falhou',
         value: {
           message: [
             'username must be shorter than or equal to 50 characters',

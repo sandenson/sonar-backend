@@ -1,9 +1,9 @@
 import { Body, Controller, Param, Patch } from '@nestjs/common';
 import {
-  ApiBadRequestResponse,
-  ApiNotFoundResponse,
-  ApiOkResponse,
-  ApiTags,
+    ApiBadRequestResponse,
+    ApiNotFoundResponse,
+    ApiOkResponse,
+    ApiTags,
 } from '@nestjs/swagger';
 import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 import { User } from 'src/users/entities/user.entity';
@@ -47,8 +47,8 @@ export class UpdateUserController {
           statusCode: 400,
         },
       },
-      fieldMissing: {
-        summary: 'Bad Request: [campo] deve respeitar [restrição de esquema]',
+      validationFailed: {
+        summary: 'Bad Request: Validação de esquema falhou',
         value: {
           message: [
             'username must be shorter than or equal to 50 characters',

@@ -17,10 +17,12 @@ export class CreateUserDto {
   @Matches(/^\S+$/, {
     message: 'Nome de usuário não pode conter espaços em branco',
   })
-  @MaxLength(50)
+  @MaxLength(50, {
+    message: 'Nome de usuário5 não pode ter mais de 200 caracteres',
+  })
   @ApiProperty({
     description:
-      'Nome de usuário não pode ter espaços em branco nem mais de 50 caracteres',
+      'Nome de usuário do usuário; não pode conter mais de 50 caracteres ou espaços em branco',
     example: 'sigma67',
     required: false,
   })
@@ -39,9 +41,9 @@ export class CreateUserDto {
   name?: string;
 
   @IsEmail()
-  @MaxLength(200)
+  @MaxLength(200, { message: 'Email não pode ter mais de 200 caracteres' })
   @ApiProperty({
-    description: 'Email não pode ter mais de 200 caracteres',
+    description: 'Email do usuário; não pode conter mais de 200 caracteres',
     example: 'exemplo@email.com',
   })
   email!: string;
