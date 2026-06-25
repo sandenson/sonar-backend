@@ -7,13 +7,32 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 config();
 
+const initDbConnectionData = () => {
+  const host = process.env.PG_HOST;
+  const port = process.env.PG_PORT ? Number(process.env.PG_PORT) : 5432;
+  const username = process.env.PG_USER;
+  const password = process.env.PG_PASS;
+  const database = process.env.PG_DB_NAME;
+
+  return process.env.ENV === 'dev'
+    ? {
+        host,
+        port,
+        username,
+        password,
+        database,
+      }
+    : {
+        url: `postgresql://${username}:${password}@${host}:${port}/${database}?sslmode=require`,
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      };
+};
+
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  host: process.env.PG_HOST,
-  port: process.env.PG_PORT ? Number(process.env.PG_PORT) : 5432,
-  username: process.env.PG_USER,
-  password: process.env.PG_PASS,
-  database: process.env.PG_DB_NAME,
+  ...initDbConnectionData(),
   entities: [
     path.resolve(__dirname, '../src/**/*.entity.ts'),
     'dist/**/*.entity.js',
@@ -24,12 +43,10 @@ export const dataSourceOptions: DataSourceOptions = {
     path.resolve(__dirname, './migrations/*{.ts,.js}'),
     'dist/db/migrations/*.js',
   ],
-  ssl: {
-    rejectUnauthorized: false,
-  },
   extra: {
     max: 1,
     connectionTimeoutMillis: 5000,
+    idleTimeoutMillis: 1000,
   },
 };
 
