@@ -1,11 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, ValidateIf } from 'class-validator';
 
 export class SignInDto {
-  @IsOptional()
-  @IsString()
-  @Transform(({ value }) => (value as string).trim())
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
+  @ValidateIf((obj: SignInDto) => !obj.email)
+  @IsString({ message: 'Nome de usuário deve ser texto' })
+  @IsNotEmpty({ message: 'Insira nome de usuário ou email' })
   @ApiProperty({
     description: 'Nome de usuário do usuário fazendo login',
     example: 'sigma67',
@@ -13,11 +15,13 @@ export class SignInDto {
   })
   username?: string;
 
-  @IsOptional()
-  @IsEmail()
-  @Transform(({ value }) => (value as string).trim())
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
+  @ValidateIf((obj: SignInDto, value) => !obj.username && !!value)
+  @IsNotEmpty({ message: 'Insira nome de usuário ou email' })
+  @IsEmail({}, { message: 'Endereço de email inválido' })
   @ApiProperty({
-    description: 'E-mail do usuário fazendo login',
+    description: 'Endereço de email do usuário fazendo login',
     example: 'exemplo@email.com',
     required: false,
   })
@@ -25,7 +29,7 @@ export class SignInDto {
 
   @IsString()
   @Transform(({ value }) => (value as string).trim())
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Insira a senha' })
   @ApiProperty({
     description: 'Senha do usuário fazendo login',
     example: 'Strong12!@',
