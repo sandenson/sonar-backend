@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   IsEmail,
-  IsNotEmpty,
   IsOptional,
   IsString,
   IsStrongPassword,
@@ -18,7 +17,7 @@ export class CreateUserDto {
     message: 'Nome de usuário não pode conter espaços em branco',
   })
   @MaxLength(50, {
-    message: 'Nome de usuário5 não pode ter mais de 200 caracteres',
+    message: 'Nome de usuário não pode ter mais de 50 caracteres',
   })
   @ApiProperty({
     description:
@@ -27,18 +26,6 @@ export class CreateUserDto {
     required: false,
   })
   username?: string;
-
-  @IsOptional()
-  @IsString()
-  @Transform(({ value }) => (value as string).trim())
-  @IsNotEmpty()
-  @MaxLength(50)
-  @ApiProperty({
-    description: 'Nome exibido para o usuário',
-    example: 'Alice',
-    required: false,
-  })
-  name?: string;
 
   @IsEmail()
   @MaxLength(200, { message: 'Email não pode ter mais de 200 caracteres' })
@@ -49,13 +36,10 @@ export class CreateUserDto {
   email!: string;
 
   @Transform(({ value }) => (value as string).trim())
-  @IsStrongPassword(
-    {},
-    {
-      message:
-        'A senha deve conter pelo menos 8 caracteres, 1 caractere especial, 1 algarismo, 1 letra maiúscula e 1 minúscula',
-    },
-  )
+  @IsStrongPassword(undefined, {
+    message:
+      'A senha deve conter pelo menos 8 caracteres, 1 caractere especial, 1 algarismo, 1 letra maiúscula e 1 minúscula',
+  })
   @ApiProperty({
     description:
       'Senha contendo pelo menos 8 caracteres, 1 caractere especial, 1 algarismo, 1 letra maiúscula e 1 minúscula',
