@@ -10,6 +10,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @ApiProperty({
     description: 'Confirmação da senha; deve ser igual ao campo "password"',
     example: 'Strong12!@',
+    required: false,
   })
   confirmPassword?: string;
 }
