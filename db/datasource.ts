@@ -41,10 +41,10 @@ export const dataSourceOptions: DataSourceOptions = {
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  migrations: [
-    path.resolve(__dirname, './migrations/*{.ts,.js}'),
-    'dist/db/migrations/*.js',
-  ],
+  migrations:
+    process.env.ENV === 'dev'
+      ? [path.resolve(__dirname, './migrations/*{.ts,.js}')]
+      : ['dist/db/migrations/*.js'],
   extra: {
     max: 1,
     connectionTimeoutMillis: 30000,

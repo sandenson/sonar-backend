@@ -4,12 +4,14 @@ import {
   ApiCreatedResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { SkipAuth } from 'src/auth/decorators/skip-auth/skip-auth.decorator';
 import { CreateUserDto } from '../../../users/dto/create-user.dto';
 import { User } from '../../../users/entities/user.entity';
 import { CreateUserService } from '../../../users/services/create-user/create-user.service';
 
 @Controller('user')
 @ApiTags('users', 'create')
+@SkipAuth()
 export class CreateUserController {
   constructor(private readonly createUserService: CreateUserService) {}
 
