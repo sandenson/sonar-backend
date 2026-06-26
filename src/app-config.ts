@@ -9,9 +9,11 @@ export function configureApp(app: INestApplication) {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.enableCors();
 
+  const isEnvTest = process.env.ENV === 'test';
+
   // 2. Swagger Configuration
   const document = new DocumentBuilder()
-    .setTitle('Sonar' + (process.env.ENV === 'test' ? ' Testes' : ''))
+    .setTitle('Sonar' + (isEnvTest ? ' Testes' : ''))
     .setDescription('Sonar - suas músicas, suas histórias')
     .setVersion('1.0')
     .addBearerAuth(
@@ -27,7 +29,20 @@ export function configureApp(app: INestApplication) {
     )
     .build();
 
-  SwaggerModule.setup('api', app, () =>
-    SwaggerModule.createDocument(app, document),
+  const swaggerCdn = 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.32.8';
+
+  SwaggerModule.setup(
+    'api',
+    app,
+    () => SwaggerModule.createDocument(app, document),
+    isEnvTest
+      ? undefined
+      : {
+          customCssUrl: `${swaggerCdn}/swagger-ui.css`,
+          customJs: [
+            `${swaggerCdn}/swagger-ui-bundle.js`,
+            `${swaggerCdn}/swagger-ui-standalone-preset.js`,
+          ],
+        },
   );
 }

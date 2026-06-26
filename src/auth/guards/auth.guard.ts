@@ -5,20 +5,20 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { IncomingMessage } from 'node:http';
 import { AccessTokenPayloadDto } from '../../auth/dto/access-token-payload.dto';
+
+interface CustomIncomingMessage extends IncomingMessage {
+  user?: AccessTokenPayloadDto;
+}
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private readonly jwtService: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context
-      .switchToHttp()
-      .getRequest<import('express').Request>();
-
-    const headers = request.headers;
-
-    const [type, token] = (headers.authorization ?? '').split(' ');
+    const request = context.switchToHttp().getRequest<CustomIncomingMessage>();
+    const [type, token] = (request.headers.authorization ?? '').split(' ');
 
     if (type != 'Bearer') {
       throw new UnauthorizedException(

@@ -14,17 +14,22 @@ const initDbConnectionData = () => {
   const password = process.env.PG_PASS;
   const database = process.env.PG_DB_NAME;
 
-  return process.env.ENV === 'dev'
-    ? {
-        host,
-        port,
-        username,
-        password,
-        database,
-      }
-    : {
-        url: `postgresql://${username}:${password}@${host}:${port}/${database}`,
-      };
+  if (process.env.ENV === 'dev') {
+    return {
+      host,
+      port,
+      username,
+      password,
+      database,
+    };
+  }
+
+  return {
+    url: `postgresql://${username}:${password}@${host}:${port}/${database}`,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  };
 };
 
 export const dataSourceOptions: DataSourceOptions = {
@@ -42,9 +47,8 @@ export const dataSourceOptions: DataSourceOptions = {
   ],
   extra: {
     max: 1,
-    connectionTimeoutMillis: 5000,
+    connectionTimeoutMillis: 30000,
     idleTimeoutMillis: 1000,
-    ssl: process.env.ENV === 'dev' ? false : { rejectUnauthorized: false },
   },
 };
 
